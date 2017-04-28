@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+$dn = [
+    "countryName" => "PL",
+    "stateOrProvinceName" => "Zachodniopomorskie",
+    "localityName" => "Szczecin",
+    "organizationName" => "GrzejNet",
+    "organizationalUnitName" => "Development",
+    "commonName" => "Development",
+    "emailAddress" => "development@grzej.net"
+];
+
+$private_key = openssl_pkey_new();
+$csr = openssl_csr_new($dn, $private_key);
+$ss_cert = openssl_csr_sign($csr, null, $private_key, 365);
+openssl_csr_export_to_file($csr, 'var/csr.csr');
+openssl_x509_export_to_file($ss_cert, 'var/ss_cert.cer');
+openssl_pkey_export_to_file($private_key, 'var/private_key.key');
+
+while ($message = openssl_error_string()) {
+    echo "{$message}\n";
+}

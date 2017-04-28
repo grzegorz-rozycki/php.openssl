@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+$private_key = file_get_contents('var/private.key');
+$public_key = file_get_contents('var/public.key');
+$data = 'this is very confidential';
+
+openssl_private_encrypt($data, $encrypted, $private_key);
+openssl_public_decrypt($encrypted, $decrypted, $public_key);
+
+echo "ORIGINAL_DATA:\t{$data}\nDECODED_DATA:\t{$decrypted}\n";
+
+while ($message = openssl_error_string()) {
+    echo "{$message}\n";
+}

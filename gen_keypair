@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+$private_key = openssl_pkey_new();
+$public_key = openssl_pkey_get_details($private_key)['key'];
+
+openssl_pkey_export_to_file($private_key, 'var/private.key');
+file_put_contents('var/public.key', $public_key);
+
+while ($message = openssl_error_string()) {
+    echo "{$message}\n";
+}
