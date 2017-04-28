@@ -4,4 +4,5 @@
 /.settings/
 /nbproject/
 
-/var/
+/var/*
+!/var/.gitkeep
